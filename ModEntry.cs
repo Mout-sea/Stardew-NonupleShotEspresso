@@ -3,6 +3,7 @@ using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley.GameData.Buffs;
 using StardewValley.GameData.Objects;
+using StardewValley.GameData.Shops;
 
 namespace NonupleShotEspresso;
 
@@ -52,7 +53,20 @@ public class ModEntry : Mod {
         if (e.Name.IsEquivalentTo("Data/CookingRecipes")) {
             e.Edit(asset => {
                 var dict = asset.AsDictionary<string, string>();
-                dict.Data["Nonuple_Shot_Espresso"] = "253 3/1 10/Nonuple_Shot_Espresso/default/"; // TODO - bought from Gus
+                dict.Data["Nonuple_Shot_Espresso"] = "253 3/1 10/Nonuple_Shot_Espresso/";
+            });
+        }
+
+        if (e.Name.IsEquivalentTo("Data/Shops")) {
+            e.Edit(asset => {
+                var dict = asset.AsDictionary<string, ShopData>();
+                dict.Data["QiGemShop"].Items.Add(new ShopItemData {
+                    Id = "Nonuple_Shot_Espresso (Recipe)",
+                    ItemId = "Nonuple_Shot_Espresso",
+                    IsRecipe = true,
+                    TradeItemId = "(O)858",
+                    TradeItemAmount = 20
+                });
             });
         }
     }
