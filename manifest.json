@@ -2,7 +2,7 @@
     "Name": "NonupleShotEspresso",
     "Author": "Moutsea",
     "Version": "1.0.0",
-    "Description": "This mod add nonuple shot espresso.",
+    "Description": "This mod adds Nonuple Shot Espresso.",
     "UniqueID": "Moutsea.NonupleShotEspresso",
     "EntryDll": "NonupleShotEspresso.dll",
     "MinimumApiVersion": "4.0.0"
