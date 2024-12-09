@@ -9,7 +9,14 @@ namespace NonupleShotEspresso;
 
 public class ModEntry : Mod {
     public override void Entry(IModHelper helper) {
-        helper.Events.Content.AssetRequested += OnAssetRequested;
+        I18n.Init(helper.Translation);
+
+        IModEvents events = helper.Events;
+        events.Content.AssetRequested += OnAssetRequested;
+        events.Content.LocaleChanged += OnLocaleChanged;
+
+        if (!helper.Translation.GetTranslations().Any())
+            this.Monitor.Log("The translation files in this mod's i18n folder seem to be missing. The mod will still work, but you'll see 'missing translation' messages. Try reinstalling the mod to fix this.", LogLevel.Warn);
     }
 
     private void OnAssetRequested(object? sender, AssetRequestedEventArgs e) {
@@ -19,8 +26,8 @@ public class ModEntry : Mod {
 
                 var itemNonupleShotEspresso = new ObjectData {
                     Name = "Nonuple_Shot_Espresso",
-                    DisplayName = "Nonuple Shot Espresso",
-                    Description = "It's more potent than regular triple shot espresso!",
+                    DisplayName = I18n.Name_NonupleShotEspresso(),
+                    Description = I18n.Description_NonupleShotEspresso(),
                     Type = "Cooking",
                     Category = StardewValley.Object.CookingCategory,
                     Price = 1350,
@@ -69,5 +76,9 @@ public class ModEntry : Mod {
                 });
             });
         }
+    }
+
+    private void OnLocaleChanged(object? sender, LocaleChangedEventArgs e) {
+        this.Helper.GameContent.InvalidateCache("Data/Objects");
     }
 }
